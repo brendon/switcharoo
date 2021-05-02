@@ -34,6 +34,22 @@ structure for all entities. You'd run this as part of your production deploy pro
 migrations also updates `db/schema.rb` new entities created after the migration will have the newer
 correct database structure also and won't need migrating.
 
+# A Note on Databases
+If you take a closer look at `config/database.yml` you'll see the regular `database` key along
+with an `admin_database` key. The `admin_database` key is used in the modified migration rake tasks.
+
+The `admin_database` (in development it's called `switcharoo_admin_development`) houses the tables
+that are responsible for managing `Entities`. In this example application there is only the `entities`
+table, but in a real application you might have extra tables like `domains` for supporting more than
+one domain per entity. You'll see we're overriding the database for the `Entity` table by setting
+`self.table_name =  "#{admin_database}.entities"`.
+
+There is a second database that is created when you bootstrap the app
+called `switcharoo_entity_development`. This is an empty reference copy of the structure that all
+entity databases will have. This is the database that is migrated first before all of the actual
+entities, and the `db/schema.rb` file is generated from this database. When the application boots
+it connects to this database first.
+
 # Try it out:
 
 1. Hit `admin.switcharoo.test`.
