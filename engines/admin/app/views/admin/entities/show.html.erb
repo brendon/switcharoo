@@ -12,7 +12,7 @@
 
 <p>
   <strong>Domain:</strong>
-  <%= @entity.domain %>
+  <%= link_to @entity.domain, "https://#{@entity.domain}", target: '_blank' %>
 </p>
 
 <%= link_to 'Edit', edit_entity_path(@entity) %> |
