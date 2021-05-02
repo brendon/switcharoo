@@ -22,6 +22,8 @@ module Switcharoo
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    config.force_ssl = true
+
     config.middleware.use HostRouter
 
     # These address configurations would normally be in environemnt-specific
