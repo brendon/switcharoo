@@ -50,6 +50,10 @@ entity databases will have. This is the database that is migrated first before a
 entities, and the `db/schema.rb` file is generated from this database. When the application boots
 it connects to this database first.
 
+# Rails Console
+In order to make troubleshooting easier in development, a menu is shown when `rails console` is run
+that allows the user to select the entity that they'd like to connect to.
+
 # Try it out:
 
 1. Hit `admin.switcharoo.test`.

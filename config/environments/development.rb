@@ -75,4 +75,29 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.hosts << ".switcharoo.test"
+
+  console do
+    require 'highline'
+    cli = HighLine.new
+
+    # Silence SQL logging for a better looking menu
+    ActiveRecord::Base.logger.level = 1
+
+    if Entity.count > 1
+      cli.choose do |menu|
+        menu.prompt = "Choose your entity: "
+
+        Entity.all.each do |entity|
+          menu.choice("#{entity.name} (#{entity.database})") do
+            ActiveRecord::Base.connection.change_database!(entity.database)
+          end
+        end
+      end
+    elsif Entity.count == 1
+      ActiveRecord::Base.connection.change_database!(Entity.first.database)
+    end
+
+    # Turn logging back on again
+    ActiveRecord::Base.logger.level = 0
+  end
 end
